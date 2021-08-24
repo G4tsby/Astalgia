@@ -27,5 +27,5 @@ class Expadition():
             self.character.append(Character(str(i)[6:-7]))
 
 if __name__ == '__main__':
-    name = "행복관NPC"
+    name = input()
     expadition = Expadition(name)
