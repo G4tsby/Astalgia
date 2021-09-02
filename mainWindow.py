@@ -12,13 +12,15 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.todo = TodoList()
+        #self.setting = TodoList()
         self.initUI()
 
     def openTodo(self):
-        self.todo = TodoList()
+        self.todo.show()
 
     def openSetting(self):
-        self.setting = None
+        self.setting.show()
 
     def initUI(self):
         self.setWindowTitle("LoAI")
@@ -83,18 +85,18 @@ class MainWindow(QMainWindow):
         self.exit_button.clicked.connect(QCoreApplication.instance().quit)
 
         # ㅁ 버튼
-        self.exit_button = QPushButton(self)
-        self.exit_button.setStyleSheet(
+        self.max_button = QPushButton(self)
+        self.max_button.setStyleSheet(
             """
             QPushButton {
                 border-image: url(./image/z.png);
             }
             """)
-        self.exit_button.setGeometry(808, 0, 46, 30)
+        self.max_button.setGeometry(808, 0, 46, 30)
 
         # _ 버튼
-        self.exit_button = QPushButton(self)
-        self.exit_button.setStyleSheet(
+        self.min_button = QPushButton(self)
+        self.min_button.setStyleSheet(
             """
             QPushButton {
                 border-image: url(./image/M.png);
@@ -103,8 +105,8 @@ class MainWindow(QMainWindow):
                 border-image: url(./image/M_p.png);
             }
             """)
-        self.exit_button.setGeometry(762, 0, 46, 30)
-        self.exit_button.clicked.connect(self.showMinimized)
+        self.min_button.setGeometry(762, 0, 46, 30)
+        self.min_button.clicked.connect(self.showMinimized)
 
         self.show()
 
