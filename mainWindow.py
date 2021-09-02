@@ -1,12 +1,9 @@
 from PyQt5 import QtCore
 from PyQt5 import QtGui
-from PyQt5 import QtWidgets
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QAction, QDesktopWidget, QFrame, QLabel, QMainWindow, QPushButton
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QLabel, QMainWindow, QPushButton, QWidget
 from PyQt5.QtCore import QCoreApplication, QPoint, Qt
 from todoList import TodoList
-
-from expaditionData import Expadition
 
 class MainWindow(QMainWindow):
 
@@ -32,7 +29,7 @@ class MainWindow(QMainWindow):
         self.setWindowFlags(Qt.FramelessWindowHint)
 
         # 상단바
-        self.bar = QtWidgets.QWidget(self)
+        self.bar = QWidget(self)
         self.bar.resize(900, 30)
         self.bar.setStyleSheet("background: #24314f")
         self.bar_icon = QLabel("LoAI", self)
@@ -124,6 +121,3 @@ class MainWindow(QMainWindow):
 
     def mouseReleaseEvent(self, event):
         self.offset = -1
-
-class GhostWindow():
-    pass
