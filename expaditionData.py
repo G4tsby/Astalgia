@@ -1,60 +1,57 @@
-from urllib.request import urlopen
-from urllib import parse
-from bs4 import BeautifulSoup
-import pickle
 import os
+import pickle
+from urllib import parse
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+from bs4.element import SoupStrainer
+from datetime import datetime
 
 class Character():
-    def __init__(self, name):
+    def __init__(self, name, cls):
         self.name = name
-        
-        self.profile_html = urlopen(f"https://lostark.game.onstove.com/Profile/Character/{parse.quote(self.name)}")
-        self.profile = BeautifulSoup(self.profile_html, "html.parser")
-        
-        self.level = str(self.profile.select("#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.level-info > div.level-info__item > span"))[45:-8]
-        self.char = str(self.profile.select("#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.level-info2 > div.level-info2__expedition"))[84:]
-        self.target_idx = self.char.find("<small>")
-        self.item_level = self.char[:self.target_idx] + self.char[self.target_idx+7:self.target_idx+10]
+        self.cls = cls
 
 class Expadition():
-    number_expadition = 0
+    def __init__(self, num, name):
+        self.num = num
+        char = SoupStrainer(['ul', 'title'])
 
-    def __init__(self, name):
-        self.number = self.number_expadition
+        # 전투정보실 페이지 받아오기
+        raw_page = urlopen(f"https://lostark.game.onstove.com/Profile/Character/{parse.quote(name)}")
+        profile = BeautifulSoup(raw_page, "html.parser", parse_only=char).select("ul.profile-character-list__char, title")
+        profile[1] = profile[1].find_all("span")
 
-        self.profile_html = urlopen(f"https://lostark.game.onstove.com/Profile/Character/{parse.quote(name)}")
-        self.profile = BeautifulSoup(self.profile_html, "html.parser")
-        if("점검" in str(self.profile.select("head > title"))):
+        # 로아 점검중일때
+        if("점검" in str(BeautifulSoup(raw_page, "html.parser", parse_only=char))):
             print("원정대 조회 실패: 로스트아크 점검중")
-            self.load_profile()
+            self.load_profile(num)
+        
+        # 점검중이 아닐때
         else:
-            self.char = list(self.profile.select("#expand-character-list > ul > li > span > button > span"))
-            self.character = [] 
-            for i in self.char:
-                self.character.append(Character(str(i)[6:-7]))
-
+            self.character = []
+            for i in range(0, len(profile[1]), 2):
+                profile[1][i] = str(profile[1][i])[7:-8]
+                char_cls = profile[1][i][profile[1][i].find("alt")+5 : profile[1][i].find("src")-2]
+                char_name = profile[1][i][profile[1][i].find("<span>")+6 : profile[1][i].find("</span>")]
+                self.character.append(Character(char_name, char_cls))
             self.save_profile()
-        self.number_expadition += 1
 
     def save_profile(self):
         if not os.path.exists("./data"):
             os.makedirs("./data")
-        with open(f"./data/expaditaion{self.number}.data", "wb") as file:
+        with open(f"./data/expaditaion{self.num}.data", "wb") as file:
             pickle.dump(len(self.character), file)
             for i in self.character:
-                pickle.dump(i.name, file)
-                pickle.dump(i.level, file)
-                pickle.dump(i.item_level, file)
-                pickle.dump(i.name, file)
+                pickle.dump({"name": i.name, "cls": i.cls}, file)
 
     def load_profile(self):
         self.character = []
-        with open(f"./data/expaditaion{self.number}.data", "rb") as file:
+        if not os.path.exists("./data/expaditaion0"):
+            print("저장된 정보 없음.")
+            return
+        with open(f"./data/expaditaion{self.num}.data", "rb") as file:
             len = pickle.load(file)
             for i in range(len):
                 self.character.append(Character(pickle.load(file)))
-                self.character[i].level = pickle.load(file)
-                self.character[i].item_level = pickle.load(file)
                 self.character[i].name = pickle.load(file)
-        for i in self.character:
-            print(i.name)
+                self.character[i].cls = pickle.load(file)
