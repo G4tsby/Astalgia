@@ -7,7 +7,6 @@ from mainWindow import MainWindow
 
 if __name__ == '__main__':
     logger = logging.getLogger()
-
     app = QApplication(sys.argv)
     QFontDatabase.addApplicationFont("./font/NanumBarunGothic.ttf")
     setting_window = MainWindow()
