@@ -3,7 +3,7 @@ from PySide6 import QtGui
 from PySide6.QtGui import QIcon, QMouseEvent
 from PySide6.QtWidgets import QLabel, QMainWindow, QPushButton, QWidget
 from PySide6.QtCore import QCoreApplication, QPointF, Qt
-from todoList import TodoList
+#from todoList import TodoList
 
 class MainWindow(QMainWindow):
 
@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setStyleSheet("font-family: NanumBarunGothic")
         self.setWindowTitle("Astalgia")
-        self.todo = TodoList()
+        #self.todo = TodoList()
         #self.setting = TodoList()
         self.initUI()
 
