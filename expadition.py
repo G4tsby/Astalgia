@@ -10,27 +10,25 @@ from datetime import datetime
 # 캐릭터 정보 딕셔너리가 리스트로 있음.
 
 class Character():
-    def __init__(self, name, cls):
+    def __init__(self, name, clss):
         self.name = name
-        self.cls = cls
-        
+        self.clss = clss
+        self.todo = [] # {name, icon, freq}
 class Expadition():
     def __init__(self, num, name):
         self.num = num
         char = SoupStrainer(['ul', 'title'])
 
+        self.load_profile(num)
         # 전투정보실 페이지 받아오기
-        if name == "마이크로포서드":
-            exit()
         raw_page = urlopen(f"https://lostark.game.onstove.com/Profile/Character/{parse.quote(name)}")
-        profile = BeautifulSoup(raw_page, "html.parser", parse_only=char).select("ul.profile-character-list__char, title")
+        parsed_page = BeautifulSoup(raw_page, "html.parser", parse_only=char)
+        profile = parsed_page.select("ul.profile-character-list__char, title")
         profile[1] = profile[1].find_all("span")
 
         # 로아 점검중일때
-        if("점검" in str(BeautifulSoup(raw_page, "html.parser", parse_only=char))):
+        if("점검" in profile[0]):
             print("원정대 조회 실패: 로스트아크 점검중")
-            self.load_profile(num)
-        
         # 점검중이 아닐때
         else:
             self.character = []
@@ -41,22 +39,21 @@ class Expadition():
                 self.character.append(Character(char_name, char_cls))
             self.save_profile()
 
-    def save_profile(self):
-        if not os.path.exists("./data"):
-            os.makedirs("./data")
-        with open(f"./data/expaditaion{self.num}.data", "wb") as file:
-            temp = []
-            for i in self.character:
-                pickle.dump({"name": i.name, "cls": i.cls}, file)
-
-    def load_profile(self):
+    def load_profile(self, num):
         self.character = []
-        if not os.path.exists("./data/expaditaion0"):
+        if not os.path.exists(f"./data/expaditaion{num}"):
             print("저장된 정보 없음.")
             return
         with open(f"./data/expaditaion{self.num}.data", "rb") as file:
             len = pickle.load(file)
             for i in range(len):
-                self.character.append(Character(pickle.load(file)))
-                self.character[i].name = pickle.load(file)
-                self.character[i].cls = pickle.load(file)
+                temp = pickle.load(file)
+                self.character.append(Character(temp["name"], temp["clss"]))
+                self.character[i].todo = temp["todo"]
+
+    def save_profile(self):
+        if not os.path.exists("./data"):
+            os.makedirs("./data")
+        with open(f"./data/expaditaion{self.num}.data", "wb") as file:
+            for i in self.character:
+                pickle.dump({"name": i.name, "clss": i.clss, "todo": i.todo}, file)
