@@ -39,9 +39,9 @@ class Expadition():
                 self.character.append(Character(char_name, char_cls))
             self.save_profile()
 
-    def load_profile(self, num):
+    def load_profile(self):
         self.character = []
-        if not os.path.exists(f"./data/expaditaion{num}"):
+        if not os.path.exists(f"./data/expaditaion{self.num}"):
             print("저장된 정보 없음.")
             return
         with open(f"./data/expaditaion{self.num}.data", "rb") as file:
@@ -55,5 +55,6 @@ class Expadition():
         if not os.path.exists("./data"):
             os.makedirs("./data")
         with open(f"./data/expaditaion{self.num}.data", "wb") as file:
+            pickle.dump(len(self.character))
             for i in self.character:
                 pickle.dump({"name": i.name, "clss": i.clss, "todo": i.todo}, file)
