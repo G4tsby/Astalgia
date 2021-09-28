@@ -19,7 +19,7 @@ class Expadition():
         self.num = num
         char = SoupStrainer(['ul', 'title'])
 
-        self.load_profile(num)
+        self.load_profile()
         # 전투정보실 페이지 받아오기
         raw_page = urlopen(f"https://lostark.game.onstove.com/Profile/Character/{parse.quote(name)}")
         parsed_page = BeautifulSoup(raw_page, "html.parser", parse_only=char)
@@ -41,10 +41,10 @@ class Expadition():
 
     def load_profile(self):
         self.character = []
-        if not os.path.exists(f"./data/expaditaion{self.num}"):
+        if not os.path.exists(f"./data/expadition{self.num}.data"):
             print("저장된 정보 없음.")
             return
-        with open(f"./data/expaditaion{self.num}.data", "rb") as file:
+        with open(f"./data/expadition{self.num}.data", "rb") as file:
             len = pickle.load(file)
             for i in range(len):
                 temp = pickle.load(file)
@@ -54,7 +54,7 @@ class Expadition():
     def save_profile(self):
         if not os.path.exists("./data"):
             os.makedirs("./data")
-        with open(f"./data/expaditaion{self.num}.data", "wb") as file:
-            pickle.dump(len(self.character))
+        with open(f"./data/expadition{self.num}.data", "wb") as file:
+            pickle.dump(len(self.character), file)
             for i in self.character:
                 pickle.dump({"name": i.name, "clss": i.clss, "todo": i.todo}, file)
