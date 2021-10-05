@@ -44,9 +44,9 @@ class MainWindow(QMainWindow):
         background.setGraphicsEffect(alpha)
 
         # 상단바
-        top_bar = topBar.TopBar(self)
+        topBar.TopBar(self)
         # 좌측바
-        side_bar = sideBar.SideBar(self)
+        sideBar.SideBar(self)
         # 컨텐츠
         content = []
 
