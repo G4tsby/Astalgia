@@ -52,3 +52,5 @@ def TopBar(parent):
         """)
     top_bar.min_button.setGeometry(1145, 15, 35, 35)
     top_bar.min_button.clicked.connect(parent.showMinimized)
+
+    return top_bar

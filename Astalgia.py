@@ -1,6 +1,5 @@
 import sys
 import logging
-import json
 from PySide6 import QtCore
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QFontDatabase
@@ -8,8 +7,7 @@ from PySide6.QtGui import QIcon, QMouseEvent, QPixmap
 from PySide6.QtCore import QCoreApplication, QPointF, Qt
 from PySide6.QtWidgets import QLabel, QMainWindow, QPushButton, QWidget, QGraphicsOpacityEffect
 
-import topBar, sideBar
-from account import Account
+import topBar, sideBar, expadition
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -21,18 +19,6 @@ class MainWindow(QMainWindow):
         self.setMaximumSize(1280, 720)
         self.setWindowIcon(QIcon("./image/4nem.png"))
         self.setWindowFlags(Qt.FramelessWindowHint)
-        self.offset = -1
-
-        # 원정대 정보 로드
-        with open("preference.json", "rt", encoding="UTF-8") as file:
-            config = json.load(file)
-        if config["account_count"] != 0:
-            expadition = [Account(i, config["account_name"][i]) \
-                            for i in range(config["account_count"])]
-
-        for i in expadition:
-            for j in i.character:
-                print(j.name, j.clss)
 
         # 배경
         background = QLabel(self)

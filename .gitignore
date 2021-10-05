@@ -1,8 +1,0 @@
-image/etc
-image/old
-.vscode/settings.json
-a.bat
-__pycache__/
-data/
-*.psd
-preference.json
