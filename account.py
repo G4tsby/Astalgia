@@ -10,7 +10,7 @@ class Character():
         self.name = name
         self.clss = clss
         self.todo = [] # {name, icon, freq}
-class Expadition():
+class Account():
     def __init__(self, num, name):
         self.num = num
 
@@ -62,10 +62,10 @@ class Expadition():
 
     def load_profile(self):
         self.character = []
-        if not os.path.exists(f"./data/expadition{self.num}.data"):
+        if not os.path.exists(f"./data/account{self.num}.data"):
             print("저장된 정보 없음.")
             return
-        with open(f"./data/expadition{self.num}.data", "rb") as file:
+        with open(f"./data/account{self.num}.data", "rb") as file:
             len = pickle.load(file)
             for i in range(len):
                 temp = pickle.load(file)
@@ -75,7 +75,7 @@ class Expadition():
     def save_profile(self):
         if not os.path.exists("./data"):
             os.makedirs("./data")
-        with open(f"./data/expadition{self.num}.data", "wb") as file:
+        with open(f"./data/account{self.num}.data", "wb") as file:
             pickle.dump(len(self.character), file)
             for i in self.character:
                 pickle.dump({"name": i.name, "clss": i.clss, "todo": i.todo}, file)
