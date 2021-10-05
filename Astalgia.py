@@ -30,10 +30,6 @@ class MainWindow(QMainWindow):
             account = [Account(i, config["account_name"][i]) \
                             for i in range(config["account_count"])]
 
-        for i in account:
-            for j in i.character:
-                print(j.name, j.clss)
-
         # 배경
         background = QLabel(self)
         background.resize(1280, 720)
