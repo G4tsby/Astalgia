@@ -19,7 +19,7 @@ class Account():
         self.getCharData(name)
 
         # 로아 점검중일때
-        if("점검" in self.profile[0]):
+        if("점검" in str(self.profile[0])):
             print("원정대 조회 실패: 로스트아크 점검중")
         # 점검중이 아닐때 캐릭터 정보 파싱
         else:
@@ -79,3 +79,4 @@ class Account():
             pickle.dump(len(self.character), file)
             for i in self.character:
                 pickle.dump({"name": i.name, "clss": i.clss, "todo": i.todo}, file)
+         
