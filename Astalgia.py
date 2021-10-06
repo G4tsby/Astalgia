@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
         background = QLabel(self)
         background.resize(1280, 720)
         background.setPixmap(QPixmap("./image/back.jpg"))
-        self.setStyleSheet("background: #202024")
+        self.setStyleSheet("background: #202024;")
         alpha = QGraphicsOpacityEffect(self)
         alpha.setOpacity(0.07)
         background.setGraphicsEffect(alpha)
