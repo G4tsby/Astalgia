@@ -2,7 +2,11 @@ image/etc
 image/old
 .vscode/settings.json
 a.bat
+.idea
 __pycache__/
 data/
 *.psd
 preference.json
+old/
+build/
+dist/
