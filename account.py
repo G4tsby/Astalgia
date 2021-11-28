@@ -41,7 +41,7 @@ class Account:
         parsed_page = BeautifulSoup(raw_page, "html.parser", parse_only=char)
         self.profile = parsed_page.select("ul.profile-character-list__char, title")
         if len(self.profile) > 2:
-            for i in range(2, len(self.profile)):
+            for i in range(1, len(self.profile)):
                 self.profile[i] = self.profile[i].find_all("span")
 
     def parse_char(self):
