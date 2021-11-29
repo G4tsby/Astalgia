@@ -59,7 +59,7 @@ class MainWindow(QMainWindow):
     def mouseMoveEvent(self, event: QMouseEvent):
         if self.offset != -1:
             delta = QPointF(event.globalPosition() - self.offset)
-            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.move(int(self.x() + delta.x()), int(self.y() + delta.y()))
             self.offset = event.globalPosition()
 
     def mouseReleaseEvent(self, event):
