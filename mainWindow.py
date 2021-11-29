@@ -28,9 +28,10 @@ class MainWindow(QMainWindow):
 
         with open("preference.json", "rt", encoding="UTF-8") as file:
             config = json.load(file)
-        if config["account_count"] != 0:
-            self.account = [Account(i, config["account_name"][i]) \
-                            for i in range(config["account_count"])]
+        if len(config["account"]) != 0:
+            self.account = [Account(i, config["account"][i]) for i in range(len(config["account"]))]
+        else:
+            self.account = []
 
         # 배경
         background = QLabel(self)
