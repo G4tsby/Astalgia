@@ -34,19 +34,18 @@ class MainWindow(QMainWindow):
             self.account = []
 
         # 배경
-        background = QLabel(self)
-        background.resize(1280, 720)
-        background.setPixmap(QPixmap("./image/back.jpg"))
+        self.background = QLabel(self)
+        self.background.resize(1280, 720)
+        self.background.setPixmap(QPixmap("./image/back.jpg"))
         self.setStyleSheet("background: #202024;")
         alpha = QGraphicsOpacityEffect(self)
         alpha.setOpacity(0.07)
-        background.setGraphicsEffect(alpha)
+        self.background.setGraphicsEffect(alpha)
 
         # 상단바
-        topBar.TopBar(self)
+        top_bar = topBar.TopBar(self)
         # 좌측바
-        sideBar.SideBar(self)
-        todo.TodoWindow(self)
+        side_bar = sideBar.SideBar(self)
         content = []
         self.show()
 

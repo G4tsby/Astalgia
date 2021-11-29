@@ -1,24 +1,24 @@
 from PySide6.QtWidgets import QWidget, QPushButton, QLabel
 from PySide6.QtCore import QCoreApplication
 
+
 class TopBar(QWidget):
     def __init__(self, par):
         super().__init__(par)
-        top_bar = QWidget(par)
-        top_bar.setGeometry(0, 0, 1280, 65)
-        top_bar.setStyleSheet("background: none; border-bottom: 1px solid rgba(110, 110, 110, 0.15);")
+        self.setGeometry(0, 0, 1280, 65)
+        self.setStyleSheet("background: none; border-bottom: 1px solid rgba(110, 110, 110, 0.15);")
 
         # 로고
-        logo = QWidget(par)
-        logo.setGeometry(17, 11, 40, 43)
-        logo.setStyleSheet("border-image: url(./image/4nem_mini.png); background: none;")
-        logo_text = QLabel("Astalgia", par)
-        logo_text.setGeometry(70, 15, 150, 35)
-        logo_text.setStyleSheet("font-size: 18pt; color: #abb1f4; background: none;")
+        self.logo = QWidget(self)
+        self.logo.setGeometry(17, 11, 40, 43)
+        self.logo.setStyleSheet("border-image: url(./image/4nem_mini.png); background: none;")
+        self.logo_text = QLabel("Astalgia", self)
+        self.logo_text.setGeometry(70, 15, 150, 35)
+        self.logo_text.setStyleSheet("font-size: 18pt; color: #abb1f4; background: none;")
 
         # X 버튼
-        top_bar.exit_button = QPushButton(par)
-        top_bar.exit_button.setStyleSheet(
+        self.exit_button = QPushButton(self)
+        self.exit_button.setStyleSheet(
             """
             QPushButton {
                 border-image: url(./image/exit.png);
@@ -27,22 +27,22 @@ class TopBar(QWidget):
                 border-image: url(./image/exit_p.png);
             }
             """)
-        top_bar.exit_button.setGeometry(1215, 15, 35, 35)
-        top_bar.exit_button.clicked.connect(QCoreApplication.instance().quit)
+        self.exit_button.setGeometry(1215, 15, 35, 35)
+        self.exit_button.clicked.connect(QCoreApplication.instance().quit)
 
         # ㅁ 버튼
-        top_bar.max_button = QPushButton(top_bar)
-        top_bar.max_button.setStyleSheet(
+        self.max_button = QPushButton(self)
+        self.max_button.setStyleSheet(
             """
             QPushButton {
                 border-image: url(./image/max.png);
             }
             """)
-        top_bar.max_button.setGeometry(1180, 15, 35, 35)
+        self.max_button.setGeometry(1180, 15, 35, 35)
 
         # _ 버튼
-        top_bar.min_button = QPushButton(top_bar)
-        top_bar.min_button.setStyleSheet(
+        self.min_button = QPushButton(self)
+        self.min_button.setStyleSheet(
             """
             QPushButton {
                 border-image: url(./image/min.png);
@@ -51,5 +51,5 @@ class TopBar(QWidget):
                 border-image: url(./image/min_p.png);
             }
             """)
-        top_bar.min_button.setGeometry(1145, 15, 35, 35)
-        top_bar.min_button.clicked.connect(par.showMinimized)
+        self.min_button.setGeometry(1145, 15, 35, 35)
+        self.min_button.clicked.connect(par.showMinimized)
