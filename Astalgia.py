@@ -10,5 +10,6 @@ if __name__ == '__main__':
     logger = logging.getLogger()
     app = QApplication(sys.argv)
     QFontDatabase.addApplicationFont("./font/NanumBarunGothic.ttf")
+    QFontDatabase.addApplicationFont("./font/D2Coding.ttc")
     window = mainWindow.MainWindow()
     sys.exit(app.exec())
