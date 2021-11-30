@@ -3,7 +3,7 @@ import logging
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QFontDatabase
 
-import mainWindow
+import mainwindow
 
 
 if __name__ == '__main__':
@@ -11,5 +11,5 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     QFontDatabase.addApplicationFont("./font/NanumBarunGothic.ttf")
     QFontDatabase.addApplicationFont("./font/D2Coding.ttc")
-    window = mainWindow.MainWindow()
+    window = mainwindow.MainWindow()
     sys.exit(app.exec())
