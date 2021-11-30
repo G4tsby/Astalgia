@@ -3,7 +3,7 @@ import json
 from PySide6 import QtCore
 from PySide6.QtGui import QIcon, QMouseEvent, QPixmap
 from PySide6.QtCore import QCoreApplication, QPointF, Qt
-from PySide6.QtWidgets import QLabel, QMainWindow, QPushButton, QWidget, QGraphicsOpacityEffect, QGraphicsBlurEffect
+from PySide6.QtWidgets import QLabel, QMainWindow, QPushButton, QWidget, QGraphicsOpacityEffect
 
 import topbar, sidebar, todo
 from account import Account
@@ -20,7 +20,6 @@ class MainWindow(QMainWindow):
         self.setWindowIcon(QIcon("./image/4nem.png"))
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.offset = -1
-        self.blur = QGraphicsBlurEffect()
 
         # 원정대 정보 로드
         if not os.path.exists("preference.json"):
@@ -43,23 +42,12 @@ class MainWindow(QMainWindow):
         alpha.setOpacity(0.07)
         self.background.setGraphicsEffect(alpha)
 
-        # 할일창
-        self.to_do = todo.TodoWindow(self)
         # 상단바
         top_bar = topbar.TopBar(self)
         # 좌측바
         side_bar = sidebar.SideBar(self)
         content = []
-
         self.show()
-
-    def blur_screen(self):
-        self.blur.setBlurRadius(10)
-        self.setGraphicsEffect(self.blur)
-
-    def remove_blur(self):
-        self.blur.setBlurRadius(0)
-        self.setGraphicsEffect(self.blur)
 
     def mousePressEvent(self, event: QMouseEvent):
         if event.button() == QtCore.Qt.LeftButton and event.position().y() <= 65:
@@ -75,3 +63,4 @@ class MainWindow(QMainWindow):
 
     def mouseReleaseEvent(self, event):
         self.offset = -1
+    

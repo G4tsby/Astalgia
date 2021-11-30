@@ -1,19 +1,9 @@
-from PySide6.QtCore import QObject, Signal
 from PySide6.QtWidgets import QLabel, QPushButton, QWidget, QGraphicsOpacityEffect
-
-
-class AddAccount(QObject):
-    add_account_signal = Signal()
 
 
 class SideBar(QWidget):
     def __init__(self, par):
-        self.par = par
-        self.signal = AddAccount()
-        self.signal.add_account_signal.connect(par.blur_screen)
         super().__init__(par)
-
-        #### UI INIT ####
         self.setGeometry(0, 65, 200, 655)
         self.setStyleSheet("background: none")
         alpha = QGraphicsOpacityEffect(self)
@@ -67,10 +57,6 @@ class SideBar(QWidget):
                                                 }
                                                 """)
         self.account_add_button.clicked.connect(self.add_account)
-        # toggled
-        # background: rgba(255, 255, 255, 30);
-        # border - radius: 3px;
-
         # 오버레이
         # 파티모집 템세팅 확인
         # 돌파고
@@ -81,9 +67,8 @@ class SideBar(QWidget):
         ########
 
     def add_account(self):
-        self.signal.add_account_signal.emit()
+        pass
 
     def set_account(self, name):
-        #self.par.to_do.set_account(name)
         # 시그널로 변경
         pass
