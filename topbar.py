@@ -6,7 +6,9 @@ class TopBar(QWidget):
     def __init__(self, par):
         super().__init__(par)
         self.setGeometry(0, 0, 1280, 65)
-        self.setStyleSheet("background: none; border-bottom: 1px solid rgba(110, 110, 110, 0.15);")
+        self.background = QWidget(self)
+        self.background.setGeometry(0, 0, 1280, 65)
+        self.background.setStyleSheet("background: none; border-bottom: 1px solid rgba(110, 110, 110, 0.15);")
 
         # 로고
         self.logo = QWidget(self)
