@@ -1,32 +1,15 @@
 import json
-from PySide6.QtCore import QObject
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QLabel, QPushButton, QWidget, QGraphicsOpacityEffect, QLineEdit
 
 from account import Account
 
 
 class AddAccount(QWidget):
-    def confirm(self):
-        self.sidebar.mainwindow.account.append(Account(len(self.sidebar.mainwindow.account), self.name.text()))
-
-        with open("preference.json", "rt", encoding="UTF-8") as file:
-            config = json.load(file)
-            config["account"].append(self.name.text())
-        with open("preference.json", "w") as file:
-            json.dump(config, file)
-
-        self.sidebar.mainwindow.to_do.add_account(self.sidebar.mainwindow.account[-1])
-        self.sidebar.add_account(self.sidebar, self.sidebar.mainwindow.account[-1].character[0].name)
-        self.close()
-
     def __init__(self, par):
         super().__init__(par.mainwindow)
         self.sidebar = par
         self.resize(1280, 720)
-
-        self.back = QWidget(self)
-        self.back.resize(1280, 720)
-        self.back.setStyleSheet("background-color: rgba(0,0,0,0.7);")
 
         self.window = QWidget(self)
         self.window.resize(400, 400)
@@ -42,16 +25,43 @@ class AddAccount(QWidget):
 
         self.add = QPushButton('확인', self.window)
         self.add.move(100, 350)
-        self.add.clicked.connect(self.confirm)
+        self.add.clicked.connect(self.confirm_btn_slot)
         self.add.setStyleSheet("font-size: 20px; color: white;")
 
         self.cancel = QPushButton('취소', self.window)
         self.cancel.move(150, 350)
-        self.cancel.clicked.connect(self.close)
+        self.cancel.clicked.connect(self.cancel_btn_slot)
         self.cancel.setStyleSheet("font-size: 20px; color: white;")
+
+        self.hide()
+
+    def confirm_btn_slot(self):
+        self.sidebar.mainwindow.account.append(Account(len(self.sidebar.mainwindow.account), self.name.text()))
+
+        with open("preference.json", "rt", encoding="UTF-8") as file:
+            config = json.load(file)
+            config["account"].append(self.name.text())
+        with open("preference.json", "w") as file:
+            json.dump(config, file)
+
+        self.sidebar.mainwindow.to_do.add_account(self.sidebar.mainwindow.account[-1])
+        self.sidebar.add_account(self.sidebar, self.sidebar.mainwindow.account[-1].character[0].name)
+        self.close()
+        self.sidebar.mainwindow.show_screen()
+
+    def show_window(self):
+        self.sidebar.mainwindow.hide_screen()
+        self.show()
+        self.raise_()
+
+    def cancel_btn_slot(self):
+        self.close()
+        self.sidebar.mainwindow.show_screen()
+
 
 
 class SideBar(QWidget):
+
     def __init__(self, par):
         self.mainwindow = par
         super().__init__(self.mainwindow)
@@ -63,7 +73,6 @@ class SideBar(QWidget):
         alpha.setOpacity(0.24)
 
         self.add = AddAccount(self)
-        self.add.hide()
 
         self.background = QWidget(self)
         self.background.setGeometry(0, 0, 200, 655)
@@ -113,7 +122,7 @@ class SideBar(QWidget):
                                                             color: #ffffff;
                                                         }
                                                         """)
-        self.account_add_button.clicked.connect(self.add.show)
+        self.account_add_button.clicked.connect(self.add.show_window)
         # toggled
         # background: rgba(255, 255, 255, 30);
         # border - radius: 3px;
