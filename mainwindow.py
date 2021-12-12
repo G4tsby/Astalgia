@@ -3,7 +3,7 @@ import json
 from PySide6 import QtCore
 from PySide6.QtGui import QIcon, QMouseEvent, QPixmap
 from PySide6.QtCore import QPointF, Qt
-from PySide6.QtWidgets import QLabel, QMainWindow, QGraphicsOpacityEffect, QWidget
+from PySide6.QtWidgets import QLabel, QMainWindow, QGraphicsOpacityEffect
 
 import topbar, sidebar, todo
 from account import Account
@@ -24,7 +24,7 @@ class MainWindow(QMainWindow):
         # 원정대 정보 로드
         if not os.path.exists("preference.json"):
             with open("preference.json", "w") as f:
-                json.dump({"account": []}, f)
+                json.dump({"account_count": 0, "account_name": []}, f)
 
         with open("preference.json", "rt", encoding="UTF-8") as file:
             config = json.load(file)
@@ -42,29 +42,15 @@ class MainWindow(QMainWindow):
         alpha.setOpacity(0.07)
         self.background.setGraphicsEffect(alpha)
 
-        # 팝업시 화면 어둡게
-        self.back = QWidget(self)
-        self.back.resize(1280, 720)
-        self.back.setStyleSheet("background: rgba(0,0,0,0.7);")
-        self.back.hide()
-
         # 할일창
         self.to_do = todo.TodoWindow(self)
         # 상단바
         top_bar = topbar.TopBar(self)
         # 좌측바
-        self.side_bar = sidebar.SideBar(self)
+        side_bar = sidebar.SideBar(self)
         content = []
 
         self.show()
-
-    def hide_screen(self):
-        self.back.show()
-        self.back.raise_()
-
-    def show_screen(self):
-        self.back.hide()
-
 
     def mousePressEvent(self, event: QMouseEvent):
         if event.button() == QtCore.Qt.LeftButton and event.position().y() <= 65:
