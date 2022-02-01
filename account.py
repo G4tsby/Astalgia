@@ -26,6 +26,9 @@ class Account:
             print("원정대 조회 실패: 로스트아크 점검중")
         # 점검중이 아닐때 캐릭터 정보 파싱
         else:
+            temp = []
+            for i in range(len(self.character)):
+                temp.append(self.character[i].todo)
             self.character = []
             self.parse_char()
             # 원정대 대표 캐릭터가 첫 인덱스로 가게 순서 변경
@@ -33,6 +36,9 @@ class Account:
                 if self.character[i].name == name:
                     self.character = [self.character[i]] + self.character[:i] + self.character[(i + 1):]
                     break
+            for i in range(len(temp)):
+                self.character[i].todo = temp[i]
+            temp = None
             self.save_profile()
 
     def get_char_data(self, name):
@@ -45,6 +51,9 @@ class Account:
                 self.profile[i] = self.profile[i].find_all("span")
 
     def parse_char(self):
+        if len(self.profile) == 1:
+            print("닉네임 잘못됨")
+            return
         if len(self.profile) > 2:
             for i in range(1, len(self.profile)):
                 self.profile[i] = list(self.profile[i])

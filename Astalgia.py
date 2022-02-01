@@ -1,13 +1,13 @@
 import sys
-import logging
+# import logging
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QFontDatabase
 
-import mainwindow
+import mainwindow, test
 
 
 if __name__ == '__main__':
-    logger = logging.getLogger()
+    # logger = logging.getLogger()
     app = QApplication(sys.argv)
     QFontDatabase.addApplicationFont("./font/NanumBarunGothic.ttf")
     QFontDatabase.addApplicationFont("./font/D2Coding.ttc")

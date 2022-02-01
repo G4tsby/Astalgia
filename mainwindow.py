@@ -1,12 +1,10 @@
-import os
-import json
 from PySide6 import QtCore
 from PySide6.QtGui import QIcon, QMouseEvent, QPixmap
 from PySide6.QtCore import QPointF, Qt
-from PySide6.QtWidgets import QLabel, QMainWindow, QGraphicsOpacityEffect
+from PySide6.QtWidgets import QLabel, QMainWindow, QGraphicsOpacityEffect, QWidget
 
-import topbar, sidebar, todo
-from account import Account
+import topbar, sidebar, todo, overlay
+#from account import Account
 
 
 class MainWindow(QMainWindow):
@@ -22,17 +20,16 @@ class MainWindow(QMainWindow):
         self.offset = -1
 
         # 원정대 정보 로드
-        if not os.path.exists("preference.json"):
-            with open("preference.json", "w") as f:
-                json.dump({"account_count": 0, "account_name": []}, f)
-
-        with open("preference.json", "rt", encoding="UTF-8") as file:
-            config = json.load(file)
-        if len(config["account"]) != 0:
-            self.account = [Account(i, config["account"][i]) for i in range(len(config["account"]))]
-        else:
-            self.account = []
-
+        # if not os.path.exists("preference.json"):
+        #     with open("preference.json", "w") as f:
+        #         json.dump({"account": []}, f)
+        #
+        # with open("preference.json", "rt", encoding="UTF-8") as file:
+        #     config = json.load(file)
+        # if len(config["account"]) != 0:
+        #     self.account = [Account(i, config["account"][i]) for i in range(len(config["account"]))]
+        # else:
+        #     self.account = []
         # 배경
         self.background = QLabel(self)
         self.background.resize(1280, 720)
@@ -42,15 +39,30 @@ class MainWindow(QMainWindow):
         alpha.setOpacity(0.07)
         self.background.setGraphicsEffect(alpha)
 
+        # 팝업시 화면 어둡게
+        self.back = QWidget(self)
+        self.back.resize(1280, 720)
+        self.back.setStyleSheet("background: rgba(0,0,0,0.7);")
+        self.back.hide()
+
         # 할일창
-        self.to_do = todo.TodoWindow(self)
+        #self.to_do = todo.TodoWindow(self)
         # 상단바
         top_bar = topbar.TopBar(self)
         # 좌측바
-        side_bar = sidebar.SideBar(self)
+        self.side_bar = sidebar.SideBar(self)
         content = []
+        self.overlay_window = overlay.OverlayWindow(self)
+        self.overlay = overlay.Overlay()
 
         self.show()
+
+    # def hide_screen(self):
+    #     self.back.show()
+    #     self.back.raise_()
+    #
+    # def show_screen(self):
+    #     self.back.hide()
 
     def mousePressEvent(self, event: QMouseEvent):
         if event.button() == QtCore.Qt.LeftButton and event.position().y() <= 65:
