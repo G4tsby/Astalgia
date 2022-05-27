@@ -51,11 +51,12 @@ class Account:
                 self.profile[i] = self.profile[i].find_all("span")
 
     def parse_char(self):
-        if len(self.profile) == 1:
+        length = len(self.profile)
+        if length == 1 and length > 12:
             print("닉네임 잘못됨")
             return
-        if len(self.profile) > 2:
-            for i in range(1, len(self.profile)):
+        elif length > 2:
+            for i in range(1, length):
                 self.profile[i] = list(self.profile[i])
                 if len(self.profile[i]) == 3:
                     self.profile[i] = self.profile[i][1:]

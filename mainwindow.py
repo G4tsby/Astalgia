@@ -1,10 +1,13 @@
-from PySide6 import QtCore
-from PySide6.QtGui import QIcon, QMouseEvent, QPixmap
-from PySide6.QtCore import QPointF, Qt
-from PySide6.QtWidgets import QLabel, QMainWindow, QGraphicsOpacityEffect, QWidget
+import os
+import json
 
-import topbar, sidebar, todo, overlay
-#from account import Account
+from account import Account
+import topbar, sidebar, todo, overlay, overlaywindow
+
+from PySide6 import QtCore
+from PySide6.QtCore import QPointF, Qt
+from PySide6.QtGui import QIcon, QMouseEvent, QPixmap
+from PySide6.QtWidgets import QLabel, QMainWindow, QGraphicsOpacityEffect
 
 
 class MainWindow(QMainWindow):
@@ -20,16 +23,17 @@ class MainWindow(QMainWindow):
         self.offset = -1
 
         # 원정대 정보 로드
-        # if not os.path.exists("preference.json"):
-        #     with open("preference.json", "w") as f:
-        #         json.dump({"account": []}, f)
-        #
-        # with open("preference.json", "rt", encoding="UTF-8") as file:
-        #     config = json.load(file)
-        # if len(config["account"]) != 0:
-        #     self.account = [Account(i, config["account"][i]) for i in range(len(config["account"]))]
-        # else:
-        #     self.account = []
+        if not os.path.exists("preference.json"):
+            with open("preference.json", "w") as f:
+                json.dump({"account": []}, f)
+
+        with open("preference.json", "rt", encoding="UTF-8") as file:
+            config = json.load(file)
+        if len(config["account"]) != 0:
+            self.account = [Account(i, config["account"][i]) for i in range(len(config["account"]))]
+        else:
+            self.account = []
+
         # 배경
         self.background = QLabel(self)
         self.background.resize(1280, 720)
@@ -38,32 +42,26 @@ class MainWindow(QMainWindow):
         alpha = QGraphicsOpacityEffect(self)
         alpha.setOpacity(0.07)
         self.background.setGraphicsEffect(alpha)
-
-        # 팝업시 화면 어둡게
-        self.back = QWidget(self)
-        self.back.resize(1280, 720)
-        self.back.setStyleSheet("background: rgba(0,0,0,0.7);")
-        self.back.hide()
-
-        # 할일창
-        #self.to_do = todo.TodoWindow(self)
         # 상단바
         top_bar = topbar.TopBar(self)
         # 좌측바
         self.side_bar = sidebar.SideBar(self)
+
         content = []
-        self.overlay_window = overlay.OverlayWindow(self)
+        # 메인 화면
+        # 파티모집 템세팅 확인
+        # 돌파고
+        # 보스 패턴 알림
+        # 생활 계산기
+        ########
+
+        # 오버레이 선택 창
+        self.overlay_window = overlaywindow.OverlayWindow(self)
         self.overlay = overlay.Overlay()
 
         self.show()
 
-    # def hide_screen(self):
-    #     self.back.show()
-    #     self.back.raise_()
-    #
-    # def show_screen(self):
-    #     self.back.hide()
-
+    # 상단바 드래그로 창 옮기는 기능
     def mousePressEvent(self, event: QMouseEvent):
         if event.button() == QtCore.Qt.LeftButton and event.position().y() <= 65:
             self.offset = event.globalPosition()
