@@ -11,3 +11,5 @@ old/
 build/
 dist/
 image/class_big
+spec_checker_test.py
+*.spec

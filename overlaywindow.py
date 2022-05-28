@@ -32,18 +32,18 @@ class OverlayWindow(QWidget):
                 self.alpha.setOpacity(0.5)
                 self.status = False
                 if n == 0:
-                    pass
+                    self.overlay_window.mainwindow.overlay.pattern_helper.toggle_visible()
                 elif n == 1:
-                    self.overlay_window.mainwindow.overlay.blue_meteor.hide()
+                    self.overlay_window.mainwindow.overlay.blue_meteor.toggle_visible()
                     self.overlay_window.mainwindow.overlay.yellow_meteor.toggle_visible()
             # 비활성화 상태일때
             else:
                 self.alpha.setOpacity(1)
                 self.status = True
                 if n == 0:
-                    pass
+                    self.overlay_window.mainwindow.overlay.pattern_helper.toggle_visible()
                 elif n == 1:
-                    self.overlay_window.mainwindow.overlay.blue_meteor.show()
+                    self.overlay_window.mainwindow.overlay.blue_meteor.toggle_visible()
                     self.overlay_window.mainwindow.overlay.yellow_meteor.toggle_visible()
 
     def __init__(self, par):

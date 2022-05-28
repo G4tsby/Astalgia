@@ -23,16 +23,16 @@ class MainWindow(QMainWindow):
         self.offset = -1
 
         # 원정대 정보 로드
-        if not os.path.exists("preference.json"):
-            with open("preference.json", "w") as f:
-                json.dump({"account": []}, f)
-
-        with open("preference.json", "rt", encoding="UTF-8") as file:
-            config = json.load(file)
-        if len(config["account"]) != 0:
-            self.account = [Account(i, config["account"][i]) for i in range(len(config["account"]))]
-        else:
-            self.account = []
+        # if not os.path.exists("preference.json"):
+        #     with open("preference.json", "w") as f:
+        #         json.dump({"account": []}, f)
+        #
+        # with open("preference.json", "rt", encoding="UTF-8") as file:
+        #     config = json.load(file)
+        # if len(config["account"]) != 0:
+        #     self.account = [Account(i, config["account"][i]) for i in range(len(config["account"]))]
+        # else:
+        #     self.account = []
 
         # 배경
         self.background = QLabel(self)
