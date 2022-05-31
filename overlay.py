@@ -49,6 +49,7 @@ class Overlay(QWidget):
                 self.time = time
                 self.color = color
                 self.status = False
+                self.origin_text = text
 
                 self.timer = QTimer()
                 self.timer.start(1000)
@@ -71,7 +72,7 @@ class Overlay(QWidget):
                 if self.status:
                     if self.text() == '0':
                         self.status = False
-                        self.setText("노메")
+                        self.setText(self.origin_text)
                         self.setStyleSheet(
                             f"""background: rgba({self.color[0]},{self.color[1]},{self.color[2]},0.2);
                             border-radius: 13px; color: rgb{self.color}; font-size: {round(80 / 1440 * self.par.h)}px;""")
@@ -90,7 +91,7 @@ class Overlay(QWidget):
         meteor_w = 300 / 105 * meteor_h
         self.yellow_meteor = Meteor("노메", self, 100,
                                     (self.w - meteor_w, 1180 / 1440 * self.h, meteor_w, meteor_h), (255, 209, 23))
-        self.blue_meteor = Meteor("파메", self, 80,
+        self.blue_meteor = Meteor("파메", self, 60,
                                   (self.w - meteor_w, 1180 / 1440 * self.h - meteor_h, meteor_w, meteor_h),
                                   (35, 206, 255))
         # <<<<<<<< 메테오 타이머 <<<<<<<
