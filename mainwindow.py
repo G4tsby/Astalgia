@@ -2,12 +2,12 @@ import os
 import json
 
 from account import Account
-import topbar, sidebar, todo, overlay, overlaywindow
+import topbar, sidebar, overlay, overlaywindow
 
 from PySide6 import QtCore
 from PySide6.QtCore import QPointF, Qt
 from PySide6.QtGui import QIcon, QMouseEvent, QPixmap
-from PySide6.QtWidgets import QLabel, QMainWindow, QGraphicsOpacityEffect
+from PySide6.QtWidgets import QLabel, QMainWindow, QWidget
 
 
 class MainWindow(QMainWindow):
@@ -38,10 +38,11 @@ class MainWindow(QMainWindow):
         self.background = QLabel(self)
         self.background.resize(1280, 720)
         self.background.setPixmap(QPixmap("./image/back.jpg"))
+        self.background_mask = QWidget(self)
+        self.background_mask.resize(1280, 720)
+        self.background_mask.setStyleSheet("background: rgba(32, 32, 36, 0.85   );")
+
         self.setStyleSheet("background: #202024;")
-        alpha = QGraphicsOpacityEffect(self)
-        alpha.setOpacity(0.07)
-        self.background.setGraphicsEffect(alpha)
         # 상단바
         top_bar = topbar.TopBar(self)
         # 좌측바
