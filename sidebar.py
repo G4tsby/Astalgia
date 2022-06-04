@@ -1,6 +1,18 @@
-import stylesheet.sidebar
 from PySide6.QtWidgets import QLabel, QPushButton, QWidget, QGraphicsOpacityEffect
 
+default_menu_text = """
+                QPushButton {
+                    background: rgba(0,0,0,0);
+                    color: rgba(255,255,255,0.5);
+                    font-size: 12pt;
+                    text-align: left;
+                    padding-left: 10px;
+                    font-family: 'NanumBarunGothic';
+                }
+                QPushButton:hover {
+                    color: #ffffff;
+                }
+                """
 
 class SideBar(QWidget):
     def __init__(self, par):
@@ -27,4 +39,4 @@ class SideBar(QWidget):
 
         self.meteor = QPushButton("운석 타이머", self)
         self.meteor.setGeometry(40, 195, 50, 30)
-        self.meteor.setStyleSheet(stylesheet.sidebar.default_menu_text)
+        self.meteor.setStyleSheet(default_menu_text)

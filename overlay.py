@@ -7,7 +7,20 @@ from PySide6.QtGui import QPainter, QPen, QColor
 from PySide6.QtCore import Qt, QTimer, QThread, Signal
 from PySide6.QtWidgets import QWidget, QPushButton, QApplication
 
-import stylesheet.overlay
+pattern_activate_button = """
+                QPushButton {
+                    background: rgba(0,0,0,0);
+                    color: rgba(0,0,0,0.5);
+                    border: 0px;
+                }
+                QPushButton:hover {
+                    color: rgba(255,255,162,0.7);
+                }
+                """
+
+# 설정 로드
+with open("preference.json", "r") as f:
+    preference = json.load(f)
 
 
 class Overlay(QWidget):
@@ -143,7 +156,7 @@ class Overlay(QWidget):
                     self.n = n
                     self.par = par
                     self.setGeometry(x, 200 / 1440 * par.par.h + meteor_w / 3 * 2, meteor_w / 3, meteor_w / 3)
-                    self.setStyleSheet(stylesheet.overlay.pattern_activate_button)
+                    self.setStyleSheet(pattern_activate_button)
                     self.clicked.connect(self.slot)
 
                 def slot(self):

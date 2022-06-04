@@ -1,5 +1,17 @@
-from PySide6.QtWidgets import QWidget, QPushButton, QLabel
+import stylesheet.topbar
 from PySide6.QtCore import QCoreApplication
+from PySide6.QtWidgets import QWidget, QPushButton, QLabel
+
+
+def control_button(name: str):
+    return f"""
+            QPushButton {{
+                border-image: url(./image/{name}.png);
+            }}
+            QPushButton:hover {{
+                border-image: url(./image/{name}_p.png);
+            }}
+            """
 
 
 class TopBar(QWidget):
@@ -20,15 +32,7 @@ class TopBar(QWidget):
 
         # X 버튼
         self.exit_button = QPushButton(self)
-        self.exit_button.setStyleSheet(
-            """
-            QPushButton {
-                border-image: url(./image/exit.png);
-            }
-            QPushButton:hover {
-                border-image: url(./image/exit_p.png);
-            }
-            """)
+        self.exit_button.setStyleSheet(control_button("exit"))
         self.exit_button.setGeometry(1215, 15, 35, 35)
         self.exit_button.clicked.connect(QCoreApplication.instance().quit)
 
@@ -44,14 +48,6 @@ class TopBar(QWidget):
 
         # _ 버튼
         self.min_button = QPushButton(self)
-        self.min_button.setStyleSheet(
-            """
-            QPushButton {
-                border-image: url(./image/min.png);
-            }
-            QPushButton:hover {
-                border-image: url(./image/min_p.png);
-            }
-            """)
+        self.min_button.setStyleSheet(control_button("min"))
         self.min_button.setGeometry(1145, 15, 35, 35)
         self.min_button.clicked.connect(par.showMinimized)
