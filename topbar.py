@@ -1,4 +1,3 @@
-import stylesheet.topbar
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QWidget, QPushButton, QLabel
 
