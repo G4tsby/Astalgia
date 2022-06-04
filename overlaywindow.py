@@ -1,3 +1,4 @@
+import keyboard
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QWidget, QPushButton, QLabel, QGraphicsOpacityEffect
@@ -58,10 +59,10 @@ class OverlayWindow(QWidget):
         self.background.setGeometry(0, 50, 1010, 585)
         self.background.setStyleSheet("background: rgba(38,38,42,0.75); border-radius: 13px;")
 
-        self.boss = self.OverlayButton(self, (150, 100, 200, 200), "능지 족보", 0)
-        self.boss.image.setPixmap(QPixmap("image/boss.png").scaledToWidth(120, Qt.SmoothTransformation))
-        self.boss.image.move(40, 20)
-        self.boss.text.move(40, 140)
+        self.pattern = self.OverlayButton(self, (150, 100, 200, 200), "능지 족보", 0)
+        self.pattern.image.setPixmap(QPixmap("image/boss.png").scaledToWidth(120, Qt.SmoothTransformation))
+        self.pattern.image.move(40, 20)
+        self.pattern.text.move(40, 140)
 
         self.meteor = self.OverlayButton(self, (400, 100, 200, 200), "운석 타이머", 1)
         self.meteor.image.setPixmap(QPixmap("image/meteor.png").scaledToWidth(120, Qt.SmoothTransformation))
@@ -72,3 +73,7 @@ class OverlayWindow(QWidget):
         self.checker.image.setPixmap(QPixmap("image/backpack.png").scaledToHeight(110, Qt.SmoothTransformation))
         self.checker.image.move(55, 20)
         self.checker.text.move(38, 140)
+
+        # 오버레이 단축키
+        keyboard.add_hotkey('ctrl+shift+F2', lambda: self.pattern.slot(0))
+        keyboard.add_hotkey('ctrl+shift+F3', lambda: self.meteor.slot(1))

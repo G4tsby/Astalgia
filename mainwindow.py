@@ -1,6 +1,6 @@
-import os
 import topbar, sidebar, overlay, overlaywindow, setting
 
+import os
 from PySide6 import QtCore
 from PySide6.QtCore import QPointF, Qt
 from PySide6.QtGui import QIcon, QMouseEvent, QPixmap

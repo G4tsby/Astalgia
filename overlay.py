@@ -57,10 +57,6 @@ class Overlay(QWidget):
         self.setWindowIcon(QIcon("./image/4nem.png"))
         self.setWindowTitle("Astalgia Overlay")
 
-        # 오버레이 단축키
-        keyboard.add_hotkey('ctrl+shift+F2', lambda: self.show_meteor())
-        keyboard.add_hotkey('ctrl+shift+F3', lambda: self.pattern_helper.toggle_visible())
-
         # 화면 크기 정보
         app = QApplication.instance()
         screen = app.primaryScreen()
