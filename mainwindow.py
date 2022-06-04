@@ -1,8 +1,5 @@
 import os
-import json
-
-from account import Account
-import topbar, sidebar, overlay, overlaywindow
+import topbar, sidebar, overlay, overlaywindow, setting
 
 from PySide6 import QtCore
 from PySide6.QtCore import QPointF, Qt
@@ -22,17 +19,9 @@ class MainWindow(QMainWindow):
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.offset = -1
 
-        # 원정대 정보 로드
-        # if not os.path.exists("preference.json"):
-        #     with open("preference.json", "w") as f:
-        #         json.dump({"account": []}, f)
-        #
-        # with open("preference.json", "rt", encoding="UTF-8") as file:
-        #     config = json.load(file)
-        # if len(config["account"]) != 0:
-        #     self.account = [Account(i, config["account"][i]) for i in range(len(config["account"]))]
-        # else:
-        #     self.account = []
+        # 설정 파일이 없을 경우 초기 설정 파일 생성
+        if os.path.exists("config.json"):
+            os.system("copy installer\\preference.json preference.json")
 
         # 배경
         self.background = QLabel(self)
@@ -47,8 +36,11 @@ class MainWindow(QMainWindow):
         top_bar = topbar.TopBar(self)
         # 좌측바
         self.side_bar = sidebar.SideBar(self)
+        # 오버레이 설정
 
-        content = []
+        self.content = {}
+        self.content["meteor"] = setting.MeteorPatternSetting(self, "meteor")
+        self.content["pattern"] = setting.MeteorPatternSetting(self, "pattern")
         # 메인 화면
         # 파티모집 템세팅 확인
         # 돌파고

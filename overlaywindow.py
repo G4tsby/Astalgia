@@ -58,7 +58,7 @@ class OverlayWindow(QWidget):
         self.background.setGeometry(0, 50, 1010, 585)
         self.background.setStyleSheet("background: rgba(38,38,42,0.75); border-radius: 13px;")
 
-        self.boss = self.OverlayButton(self, (150, 100, 200, 200), "패턴 알림", 0)
+        self.boss = self.OverlayButton(self, (150, 100, 200, 200), "능지 족보", 0)
         self.boss.image.setPixmap(QPixmap("image/boss.png").scaledToWidth(120, Qt.SmoothTransformation))
         self.boss.image.move(40, 20)
         self.boss.text.move(40, 140)
@@ -68,7 +68,7 @@ class OverlayWindow(QWidget):
         self.meteor.image.move(40, 20)
         self.meteor.text.move(20, 140)
 
-        self.checker = self.OverlayButton(self, (650, 100, 200, 200), "군장검사", 2)
+        self.checker = self.OverlayButton(self, (650, 100, 200, 200), " 커밍쑨", 2)
         self.checker.image.setPixmap(QPixmap("image/backpack.png").scaledToHeight(110, Qt.SmoothTransformation))
         self.checker.image.move(55, 20)
         self.checker.text.move(38, 140)

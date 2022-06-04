@@ -1,0 +1,14 @@
+{
+    "overlay": {
+        "meteor": {
+            "size": 1,
+            "x": 0,
+            "y": 0
+        },
+        "pattern": {
+            "size": 1,
+            "x": 0,
+            "y": 0
+        }
+    }
+}
