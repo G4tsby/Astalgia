@@ -1,0 +1,8 @@
+bs4
+keyboard
+pyside6
+opencv-python
+Image
+mss
+pytesseract
+numpy
